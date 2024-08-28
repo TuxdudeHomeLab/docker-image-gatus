@@ -86,13 +86,7 @@ EXPOSE 4443
 
 HEALTHCHECK \
     --start-period=15s --interval=30s --timeout=3s \
-    CMD curl \
-        --silent \
-        --fail \
-        --location \
-        --show-error \
-        --insecure \
-        https://localhost:4443/
+    CMD homelab healthcheck-service https://localhost:4443/
 
 ENV USER=${USER_NAME}
 USER ${USER_NAME}:${GROUP_NAME}
