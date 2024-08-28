@@ -20,7 +20,10 @@ RUN \
     && homelab install git patch \
     && mkdir -p /root/gatus-build \
     # Download gatus repo. \
-    && git clone --quiet --depth 1 --branch ${GATUS_VERSION:?} https://github.com/TwiN/gatus /root/gatus-build
+    && homelab download-git-repo \
+        https://github.com/TwiN/gatus \
+        ${GATUS_VERSION:?} \
+        /root/gatus-build
 
 WORKDIR /root/gatus-build
 

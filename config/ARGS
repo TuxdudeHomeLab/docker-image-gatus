@@ -1,7 +1,7 @@
 BASE_IMAGE_NAME=tuxdude/homelab-base
 BASE_IMAGE_TAG=master
 GO_IMAGE_NAME=tuxdude/homelab-go
-GO_IMAGE_TAG=0.1.2-go-1.23.0
+GO_IMAGE_TAG=0.1.3-go-1.23.0
 USER_NAME=gatus
 GROUP_NAME=gatus
 USER_ID=16018
