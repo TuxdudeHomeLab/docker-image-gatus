@@ -16,6 +16,7 @@ COPY patches /patches
 
 RUN \
     set -E -e -o pipefail \
+    && export HOMELAB_VERBOSE=y \
     && homelab install git patch \
     && mkdir -p /root/gatus-build \
     # Download gatus repo. \
@@ -26,6 +27,7 @@ WORKDIR /root/gatus-build
 # hadolint ignore=DL4006,SC2035
 RUN \
     set -E -e -o pipefail \
+    && export HOMELAB_VERBOSE=y \
     # Apply the patches. \
     && (find /patches -iname *.diff -print0 | sort -z | xargs -0 -r -n 1 patch -p2 -i) \
     # Build Gatus. \
@@ -50,6 +52,7 @@ ARG GATUS_VERSION
 # hadolint ignore=DL4006,SC2086
 RUN --mount=type=bind,target=/gatus-build,from=builder,source=/output \
     set -E -e -o pipefail \
+    && export HOMELAB_VERBOSE=y \
     # Create the user and the group. \
     && homelab add-user \
         ${USER_NAME:?} \
