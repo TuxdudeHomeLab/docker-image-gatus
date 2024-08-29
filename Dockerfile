@@ -70,7 +70,6 @@ RUN --mount=type=bind,target=/gatus-build,from=builder,source=/output \
         /opt/bin/{gatus,start-gatus} \
         /data/gatus \
     # Clean up. \
-    && rm -rf /tmp/gatus \
     && homelab cleanup
 
 # Expose the TLS port used by Gatus.
