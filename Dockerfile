@@ -12,6 +12,7 @@ ARG GATUS_VERSION
 COPY scripts/start-gatus.sh /scripts/
 COPY patches /patches
 
+# hadolint ignore=SC3040
 RUN \
     set -E -e -o pipefail \
     && export HOMELAB_VERBOSE=y \
