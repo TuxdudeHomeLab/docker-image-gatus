@@ -9,8 +9,6 @@ FROM ${GO_IMAGE_NAME}:${GO_IMAGE_TAG} AS builder
 
 ARG GATUS_VERSION
 
-SHELL ["/bin/bash", "-c"]
-
 COPY scripts/start-gatus.sh /scripts/
 COPY patches /patches
 
