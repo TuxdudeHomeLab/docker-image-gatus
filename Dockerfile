@@ -12,7 +12,7 @@ ARG GATUS_VERSION
 COPY scripts/start-gatus.sh /scripts/
 COPY patches /patches
 
-# hadolint ignore=SC3040
+# hadolint ignore=DL4006,SC3040,SC3009
 RUN \
     set -E -e -o pipefail \
     && export HOMELAB_VERBOSE=y \
@@ -22,24 +22,19 @@ RUN \
     && homelab download-git-repo \
         https://github.com/TwiN/gatus \
         ${GATUS_VERSION:?} \
-        /root/gatus-build
-
-WORKDIR /root/gatus-build
-
-# hadolint ignore=DL4006,SC2035
-RUN \
-    set -E -e -o pipefail \
-    && export HOMELAB_VERBOSE=y \
+        /root/gatus-build \
+    && pushd /root/gatus-build \
     # Apply the patches. \
     && (find /patches -iname *.diff -print0 | sort -z | xargs -0 -r -n 1 patch -p2 -i) \
     # Build Gatus. \
     && go mod tidy \
     && CGO_ENABLED=0 GOOS=linux go build -a . \
+    && popd \
     # Copy the build artifacts. \
-    && mkdir -p /output/bin /output/scripts /output/configs \
-    && cp /scripts/* /output/scripts \
-    && cp gatus /output/bin \
-    && cp config.yaml /output/configs
+    && mkdir -p /output/{bin,scripts,configs} \
+    && cp /root/gatus-build/gatus /output/bin \
+    && cp /root/gatus-build/config.yaml /output/configs \
+    && cp /scripts/* /output/scripts
 
 FROM ${BASE_IMAGE_NAME}:${BASE_IMAGE_TAG}
 
