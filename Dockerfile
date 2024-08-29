@@ -38,15 +38,13 @@ RUN \
 
 FROM ${BASE_IMAGE_NAME}:${BASE_IMAGE_TAG}
 
-SHELL ["/bin/bash", "-c"]
-
 ARG USER_NAME
 ARG GROUP_NAME
 ARG USER_ID
 ARG GROUP_ID
 ARG GATUS_VERSION
 
-# hadolint ignore=DL4006,SC2086
+# hadolint ignore=DL4006,SC2086,SC3009
 RUN --mount=type=bind,target=/gatus-build,from=builder,source=/output \
     set -E -e -o pipefail \
     && export HOMELAB_VERBOSE=y \
